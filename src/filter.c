@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
     RGBTRIPLE(*image)[width] = calloc(height, width * sizeof(RGBTRIPLE));
     if (image == NULL)
     {
-        printf("Not enough memory to store image.\n");
+        fprintf(stderr, "Not enough memory to store image.\n");
         cleanup(inptr, outptr, NULL, 7);
     }
 
@@ -82,19 +82,19 @@ char parse_arguments(int argc, char *argv[])
     // Get filer flag and check validity
     char filter = getopt(argc, argv, FILTERS);
     if (filter == '?') {
-        printf("Invalid filter.\n");
+        fprintf(stderr, "Invalid filter.\n");
         cleanup(NULL, NULL, NULL, 1);
     }
 
     // Ensure only one filter
     if (getopt(argc, argv, FILTERS) != -1) {
-        printf("Only one filter allowed.\n");
+        fprintf(stderr, "Only one filter allowed.\n");
         cleanup(NULL, NULL, NULL, 2);
     }
 
     // Ensure proper usage
     if (argc != optind + 2) {
-        printf("Usage: ./filter [flag] infile outfile\n");
+        fprintf(stderr, "Usage: ./filter [flag] infile outfile\n");
         cleanup(NULL, NULL, NULL, 3);
     }
 
@@ -106,14 +106,14 @@ void open_files(char *infile_name, char *outfile_name, FILE **inptr, FILE **outp
     // Open input file
     *inptr = fopen(infile_name, "rb");
     if (*inptr == NULL) {
-        printf("Could not open %s.\n", infile_name);
+        fprintf(stderr, "Could not open %s.\n", infile_name);
         cleanup(NULL, NULL, NULL, 4);
     }
 
     // Open output file
     *outptr = fopen(outfile_name, "w");
     if (*outptr == NULL) {
-        printf("Could not create %s.\n", outfile_name);
+        fprintf(stderr, "Could not create %s.\n", outfile_name);
         cleanup(*inptr, NULL, NULL, 5);
     }
 
@@ -124,19 +124,19 @@ void validate_bitmap_headers(char *infile_name, FILE *inptr, FILE *outptr, BITMA
 {
     // Read infile's BITMAPFILEHEADER
     if (fread(bf, sizeof(*bf), 1, inptr) != 1) {
-	    printf("Could not read file header from %s.\n", infile_name);
+	    fprintf(stderr, "Could not read file header from %s.\n", infile_name);
         cleanup(inptr, outptr, NULL, 6);
     }
 
     // Read infile's BITMAPINFOHEADER
     if(fread(bi, sizeof(*bi), 1, inptr) != 1) {
-	    printf("Could not read info header from %s.\n", infile_name);
+	    fprintf(stderr, "Could not read info header from %s.\n", infile_name);
 	    cleanup(inptr, outptr, NULL, 7);
     }
 
     // Ensure infile is (likely) a 24-bit uncompressed BMP 4.0
     if (bf->bfType != FILE_TYPE || bi->biBitCount != BM_BPP_NUMBER || bi->biCompression != BM_COMPRESSION) {
-	    printf("Unsupported file format.\n");
+	    fprintf(stderr, "Unsupported file format.\n");
 	    cleanup(inptr, outptr, NULL, 8);
     }
 
