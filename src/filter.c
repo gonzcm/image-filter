@@ -77,14 +77,6 @@ int main(int argc, char *argv[])
     cleanup(inptr, outptr, image, 0);
 }
 
-/**
- * Parses the command line arguments to determine the filter to be applied and ensures
- * that the correct number of arguments are provided.
- * 
- * @param argc The number of command line arguments passed to the program.
- * @param argv An array of pointers to strings representing the command line arguments.
- * @return A character representing the filter to be applied.
- */
 char parse_arguments(int argc, char *argv[])
 {
     // Get filer flag and check validity
@@ -109,14 +101,6 @@ char parse_arguments(int argc, char *argv[])
     return filter;
 }
 
-/**
- * Opens the input and output files specified by the file names.
- * 
- * @param infile_name Pointer to a string containing the name of the input file to be opened.
- * @param outfile_name Pointer to a string containing the name of the output file to be opened.
- * @param inptr Pointer to a FILE pointer where the opened input file handle will be stored.
- * @param outptr Pointer to a FILE pointer where the opened output file handle will be stored.
- */
 void open_files(char *infile_name, char *outfile_name, FILE **inptr, FILE **outptr)
 {
     // Open input file
@@ -136,16 +120,6 @@ void open_files(char *infile_name, char *outfile_name, FILE **inptr, FILE **outp
     return;
 }
 
-/**
- * Reads and validates the BITMAPFILEHEADER and BITMAPINFOHEADER from the input file.
- * Ensures that the file is a 24-bit uncompressed BMP 4.0.
- * 
- * @param infile_name Pointer to a string containing the name of the input file to be opened.
- * @param inptr Pointer to the input file from which the headers are read.
- * @param outptr Pointer to the output file.
- * @param bf Pointer to a BITMAPFILEHEADER structure where the file header will be stored.
- * @param bi Pointer to a BITMAPINFOHEADER structure where the info header will be stored.
- */
 void validate_bitmap_headers(char *infile_name, FILE *inptr, FILE *outptr, BITMAPFILEHEADER *bf, BITMAPINFOHEADER *bi)
 {
     // Read infile's BITMAPFILEHEADER
@@ -169,16 +143,6 @@ void validate_bitmap_headers(char *infile_name, FILE *inptr, FILE *outptr, BITMA
     return;
 }
 
-/**
- * Applies the specified filter to the image based on the filter character provided.
- * The function modifies the image in place according to the filter selected.
- * 
- * @param filter A character indicating which filter to apply. Valid options are:
- *               'b' for blur, 'e' for edges, 'g' for grayscale, and 'r' for reflect.
- * @param height The height of the image in pixels.
- * @param width The width of the image in pixels.
- * @param image A pointer to the image array where the filter will be applied.
- */
 void apply_filter(char filter, int height, int width, RGBTRIPLE(*image)[width])
 {
     // Filter image
@@ -208,15 +172,6 @@ void apply_filter(char filter, int height, int width, RGBTRIPLE(*image)[width])
     return;
 }
 
-
-/**
- * Frees allocated memory and closes open files.
- * 
- * @param inptr Pointer to the input file. If NULL, no action is taken.
- * @param outptr Pointer to the output file. If NULL, no action is taken.
- * @param image Pointer to the dynamically allocated image memory. If NULL, no action is taken.
- * @param status_code The exit code to terminate the program with.
- */
 void cleanup(FILE *inptr, FILE *outptr, RGBTRIPLE(*image)[], int status_code)
 {
     // Free memory for image

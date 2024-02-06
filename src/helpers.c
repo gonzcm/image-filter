@@ -4,13 +4,6 @@
 #include <string.h>
 #include "helpers.h"
 
-/**
- * Converts an image to grayscale by averaging the RGB values of each pixel.
- * 
- * @param height The height of the image in pixels.
- * @param width The width of the image in pixels.
- * @param image A 2D array of RGBTRIPLEs representing the image to be processed.
- */
 void grayscale(int height, int width, RGBTRIPLE image[height][width])
 {
     for (int i = 0; i < height; i++)
@@ -30,13 +23,6 @@ void grayscale(int height, int width, RGBTRIPLE image[height][width])
     return;
 }
 
-/**
- * Reflects an image horizontally.
- * 
- * @param height The height of the image in pixels.
- * @param width The width of the image in pixels.
- * @param image A 2D array of RGBTRIPLEs representing the image to be processed.
- */
 void reflect(int height, int width, RGBTRIPLE image[height][width])
 {
     for (int i = 0; i < height; i++)
@@ -57,13 +43,6 @@ void reflect(int height, int width, RGBTRIPLE image[height][width])
     return;
 }
 
-/**
- * Applies a box blur to an image by averaging the color values of each pixel with those of its neighboring pixels.
- * 
- * @param height The height of the image in pixels.
- * @param width The width of the image in pixels.
- * @param image A 2D array of RGBTRIPLEs representing the original image. The blurred image is returned in this array.
- */
 void blur(int height, int width, RGBTRIPLE image[height][width])
 {
     RGBTRIPLE(*temp)[width] = calloc(height, width * sizeof(RGBTRIPLE));
@@ -114,13 +93,6 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
     return;
 }
 
-/**
- * Applies the Sobel operator to an image to highlight edges by computing the gradient magnitude in the x and y directions.
- * 
- * @param height The height of the image in pixels.
- * @param width The width of the image in pixels.
- * @param image A 2D array of RGBTRIPLEs representing the image. The image with detected edges is returned in this array.
- */
 void edges(int height, int width, RGBTRIPLE image[height][width])
 {
     RGBTRIPLE(*temp)[width] = calloc(height, width * sizeof(RGBTRIPLE));
